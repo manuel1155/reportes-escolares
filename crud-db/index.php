@@ -21,7 +21,7 @@
         </tr>
 
         <?php
-        include 'db.php';
+        include './../lib/db.php';
 
         $stmt = $conn->prepare("SELECT * FROM personas");
         $stmt->execute();

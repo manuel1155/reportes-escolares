@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include './../lib/db.php';
 
 $id = $_GET['id'];
 $stmt = $conn->prepare("SELECT * FROM personas WHERE id = :id");
