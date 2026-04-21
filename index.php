@@ -9,5 +9,12 @@
     <h1>Bienvenidos al sistema de reportes escolares</h1>
     <br><br><br>
     <a href="./crud-db">CRUD Ejemplo</a>
+    
+    <a href="./carreras">Carreras</a>
+
+    <a href="./tutores">tutores</a>
+
+    <a href="./grupos">grupos</a>
+    
 </body>
 </html>
