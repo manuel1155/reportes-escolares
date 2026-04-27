@@ -12,136 +12,165 @@
         :root {
             --cbta-green: #1B5E20;
             --cbta-gold: #B8860B;
-            --soft-bg: #fdfdfd;
             --text-main: #2c3e50;
+            --soft-green: rgba(27, 94, 32, 0.06);
+            --hover-green: rgba(27, 94, 32, 0.1);
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f4f7f6;
-            /* Sutil patrón de puntos profesional */
             background-image: radial-gradient(#d1d1d1 0.8px, transparent 0.8px);
             background-size: 25px 25px;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-main);
             margin: 0;
         }
 
         .main-card {
             background: #ffffff;
-            border-radius: 24px;
-            border: none;
-            padding: 4rem 3rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+            border-radius: 30px;
+            padding: 3.5rem 2.5rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.06);
             text-align: center;
-            max-width: 550px;
-            border-bottom: 6px solid var(--cbta-gold);
-            position: relative;
-        }
-
-        /* Línea de acento superior */
-        .main-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background-color: var(--cbta-green);
-            border-radius: 24px 24px 0 0;
+            max-width: 600px;
+            width: 90%;
+            border-top: 8px solid var(--cbta-green);
+            border-bottom: 8px solid var(--cbta-gold);
         }
 
         .icon-container {
-            width: 90px;
-            height: 90px;
-            background-color: rgba(27, 94, 32, 0.05);
+            width: 80px;
+            height: 80px;
+            background-color: var(--soft-green);
             color: var(--cbta-green);
-            border-radius: 50%;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            margin: 0 auto 2rem;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
         }
 
         h1 {
             font-weight: 800;
             color: var(--cbta-green);
-            font-size: 2.2rem;
-            margin-bottom: 1.2rem;
-            letter-spacing: -1px;
+            font-size: 2rem;
+            margin-bottom: 1rem;
         }
 
-        p.description {
+        .description {
             color: #6c757d;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 3rem;
-        }
-
-        .btn-cbta {
-            background-color: var(--cbta-green);
-            color: white;
-            border: none;
-            padding: 16px 40px;
-            border-radius: 12px;
-            font-weight: 700;
             font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
+            margin-bottom: 2.5rem;
         }
 
-        .btn-cbta:hover {
-            background-color: #144618;
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(27, 94, 32, 0.15);
+        /* --- SECCIÓN DE BOTONES ESTÉTICOS --- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .btn-module {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 15px;
+            background-color: var(--soft-green);
+            color: var(--cbta-green);
+            border: 1.5px solid transparent;
+            border-radius: 18px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-module i {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-module span {
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Efectos Hover */
+        .btn-module:hover {
+            background-color: white;
+            border-color: var(--cbta-gold);
+            color: var(--cbta-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(184, 134, 11, 0.1);
+        }
+
+        .btn-module:hover i {
+            transform: scale(1.2);
         }
 
         .footer-info {
-            margin-top: 3.5rem;
+            margin-top: 3rem;
             padding-top: 1.5rem;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #f1f1f1;
         }
 
         .footer-info small {
             color: #adb5bd;
-            font-weight: 600;
-            letter-spacing: 1px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
         }
     </style>
 </head>
 <body>
 
-    <div class="container d-flex justify-content-center">
-        <div class="main-card">
-            <div class="icon-container">
-                <i class="fas fa-graduation-cap"></i>
-            </div>
-            
-            <h1>Reportes Escolares</h1>
-            
-            <p class="description">
-                Plataforma oficial de gestión y control de datos académicos. 
-                Diseñada para la eficiencia y transparencia de nuestra comunidad educativa.
-            </p>
-            
-            <a href="./crud-db" class="btn-cbta">
-                <i class="fas fa-database"></i> Acceder al Sistema
+    <div class="main-card">
+        <div class="icon-container">
+            <i class="fas fa-layer-group"></i>
+        </div>
+        
+        <h1>Panel de Gestión</h1>
+        <p class="description">Seleccione el módulo que desea administrar para continuar.</p>
+        
+        <div class="menu-grid">
+            <a href="./crud-db" class="btn-module">
+                <i class="fas fa-user-graduate"></i>
+                <span>Personas</span>
             </a>
-            
-            <div class="footer-info">
-                <small>CBTA NO. 159 • MODO INSTITUCIONAL</small>
-            </div>
+
+            <a href="./carreras" class="btn-module">
+                <i class="fas fa-book"></i>
+                <span>Carreras</span>
+            </a>
+
+            <a href="./tutores" class="btn-module">
+                <i class="fas fa-user-tie"></i>
+                <span>Tutores</span>
+            </a>
+
+            <a href="./tutores" class="btn-module">
+                <i class="fas fa-user-tie"></i>
+                <span>Reportes</span>
+            </a>
+
+            <a href="./tutores" class="btn-module">
+                <i class="fas fa-user-tie"></i>
+                <span>Grupos</span>
+            </a>
+
+        </div>
+        
+        <div class="footer-info">
+            <small>CBTA NO. 159 • SISTEMA CENTRAL</small>
         </div>
     </div>
+
 </body>
 </html>
