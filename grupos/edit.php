@@ -14,13 +14,18 @@ $stmt->execute([$id]);
 $grupo = $stmt->fetch();
 
 if (!$grupo) {
-    header("Location: index.php");
-    exit();
+    die("Registro no encontrado");
 }
 
-// Carreras y Tutores para los selects
-$carreras = $conn->query("SELECT * FROM carreras WHERE activo = 1")->fetchAll();
-$tutores = $conn->query("SELECT * FROM tutores WHERE activo = 1")->fetchAll();
+// Carreras
+$stmt = $conn->prepare("SELECT * FROM carreras WHERE activo = 1");
+$stmt->execute();
+$carreras = $stmt->fetchAll();
+
+// Tutores
+$stmt = $conn->prepare("SELECT * FROM tutores WHERE activo = 1");
+$stmt->execute();
+$tutores = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
