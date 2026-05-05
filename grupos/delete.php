@@ -1,20 +1,17 @@
 <?php
 include './../lib/db.php';
 
+$id = $_GET['id'] ?? null;
 $success = false;
-$error = false;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST['nombre'];
-
-    $sql = "INSERT INTO carreras (nombre, activo) VALUES (:nombre, 1)";
+if ($id) {
+    // Borrado lógico para conservar integridad referencial
+    $sql = "UPDATE grupos SET activo = 0 WHERE id = :id";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':nombre', $nombre);
+    $stmt->bindParam(':id', $id);
 
     if ($stmt->execute()) {
         $success = true;
-    } else {
-        $error = true;
     }
 }
 ?>
@@ -24,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guardando Carrera... | CBTa 159</title>
+    <title>Eliminando Grupo | CBTa 159</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -33,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <style>
         :root {
             --cbta-green: #1B5E20;
-            --cbta-gold: #B8860B;
+            --danger-soft: #dc3545;
         }
 
         body {
@@ -47,66 +44,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             overflow: hidden;
         }
 
-        .loader-content {
+        .loader-container {
             text-align: center;
-            animation: fadeIn;
-            animation-duration: 1s;
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        /* Spinner con los colores del CBTa */
-        .cbta-spinner {
-            width: 4rem;
-            height: 4rem;
-            border: 0.4em solid rgba(27, 94, 32, 0.1);
-            border-left-color: var(--cbta-gold);
+        /* Spinner sutil y moderno */
+        .spinner-minimal {
+            width: 3.5rem;
+            height: 3.5rem;
+            border: 3px solid rgba(220, 53, 69, 0.1);
+            border-top: 3px solid var(--danger-soft);
             border-radius: 50%;
             display: inline-block;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        .status-text {
-            color: var(--cbta-green);
+        .loading-text {
+            color: #6c757d;
             font-weight: 600;
-            margin-top: 1.5rem;
+            margin-top: 1.2rem;
+            font-size: 0.9rem;
             letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
 
-    <div class="loader-content">
+    <div class="loader-container">
         <?php if ($success): ?>
             <script>
-                // Pequeña pausa para que se vea la animación institucional
+                // Retraso breve para suavizar la transición
                 setTimeout(() => {
                     Swal.fire({
-                        title: '¡Carrera Registrada!',
-                        text: 'La nueva oferta académica se guardó correctamente.',
+                        title: 'Grupo Removido',
+                        text: 'El grupo ha sido dado de baja del listado activo.',
                         icon: 'success',
                         iconColor: '#1B5E20',
                         confirmButtonColor: '#1B5E20',
-                        confirmButtonText: 'Continuar',
-                        showClass: { popup: 'animate__animated animate__backInDown' },
-                        hideClass: { popup: 'animate__animated animate__fadeOutDown' }
+                        confirmButtonText: 'Entendido',
+                        showClass: { popup: 'animate__animated animate__zoomIn' },
+                        hideClass: { popup: 'animate__animated animate__fadeOut' }
                     }).then(() => {
                         window.location.href = 'index.php';
                     });
                 }, 1000);
             </script>
-        <?php endif; ?>
-
-        <?php if ($error): ?>
+        <?php else: ?>
             <script>
                 setTimeout(() => {
                     Swal.fire({
-                        title: 'Error de Registro',
-                        text: 'No se pudo guardar la carrera. Intente de nuevo.',
+                        title: 'Error',
+                        text: 'No se pudo procesar la baja del grupo.',
                         icon: 'error',
-                        confirmButtonColor: '#d33'
+                        confirmButtonColor: '#dc3545'
                     }).then(() => {
                         window.location.href = 'index.php';
                     });
@@ -114,9 +109,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </script>
         <?php endif; ?>
 
-        <div class="cbta-spinner" role="status"></div>
-        <h5 class="status-text">Procesando información académica...</h5>
-        <p class="text-muted small">CBTa 159 • Sistema de Gestión de Carreras</p>
+        <div class="spinner-minimal" role="status"></div>
+        <p class="loading-text">Actualizando base de datos...</p>
     </div>
 
 </body>
