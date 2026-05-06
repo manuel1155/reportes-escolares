@@ -167,7 +167,7 @@ $tutores = $stmt->fetchAll();
                 <label class="form-label">Grado Académico</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-signal"></i></span>
-                    <select name="grado" class="form-select" required>
+                    <select name="grado" id="grado" class="form-select" required>
                         <option value="">Seleccionar...</option>
                         <?php for ($i = 1; $i <= 6; $i++): ?>
                             <option value="<?= $i ?>"><?= $i ?>° Semestre</option>
@@ -208,7 +208,7 @@ $tutores = $stmt->fetchAll();
                 <label class="form-label">Carrera Técnica</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-graduation-cap"></i></span>
-                    <select name="id_carrera" class="form-select" required>
+                    <select name="id_carrera" id="id_carrera" class="form-select" required>
                         <option value="">Asignar carrera...</option>
                         <?php foreach ($carreras as $row): ?>
                             <option value="<?= $row['id'] ?>">
@@ -217,6 +217,7 @@ $tutores = $stmt->fetchAll();
                         <?php endforeach; ?>
                     </select>
                 </div>
+                <div id="carrera-help" class="form-text text-danger d-none">Primer semestre no requiere carrera técnica.</div>
             </div>
 
             <div class="col-md-12 mb-4">
@@ -246,5 +247,33 @@ $tutores = $stmt->fetchAll();
     </form>
 </div>
 
-</body>
-</html>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const selectGrado = document.getElementById('grado');
+    const selectCarrera = document.getElementById('id_carrera');
+    const carreraHelp = document.getElementById('carrera-help');
+
+    function toggleCarrera() {
+        if (selectGrado.value === "1") {
+            // Deshabilitar
+            selectCarrera.disabled = true;
+            selectCarrera.required = false;
+            selectCarrera.value = ""; // Limpiar selección
+            selectCarrera.style.backgroundColor = "#f8f9fa"; // Color de campo bloqueado
+            carreraHelp.classList.remove('d-none'); // Mostrar aviso
+        } else {
+            // Habilitar
+            selectCarrera.disabled = false;
+            selectCarrera.required = true;
+            selectCarrera.style.backgroundColor = ""; // Volver a color original
+            carreraHelp.classList.add('d-none'); // Ocultar aviso
+        }
+    }
+
+    // Ejecutar cuando cambie el grado
+    selectGrado.addEventListener('change', toggleCarrera);
+    
+    // Ejecutar al inicio por si el navegador recuerda la selección previa
+    toggleCarrera();
+});
+</script>

@@ -60,6 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bindParam(':periodo', $periodo);
     $stmt->bindParam(':id_carrera', $id_carrera);
     $stmt->bindParam(':id_tutor', $id_tutor);
+    $stmt->bindParam(':id', $id);
+
 
     if ($stmt->execute()) {
         $success = true;
