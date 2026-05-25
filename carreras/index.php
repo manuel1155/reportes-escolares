@@ -175,11 +175,12 @@
         </table>
     </div>
 
-    <div class="mt-4">
-        <a href="./.." class="btn-back">
-            <i class="fas fa-arrow-left me-1"></i> Regresar al Inicio
+  <div class="mt-4 pt-3 border-top">
+        <a href="../inicio_dashboard.html" class="btn-back">
+            <i class="fas fa-arrow-left me-1"></i> Regresar al inicio
         </a>
-    </div>
+
+        </div>
 </div>
 
 <script>
