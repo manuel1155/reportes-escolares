@@ -85,6 +85,29 @@
             margin-bottom: 2rem;
         }
 
+        /* --- APARTADO DE BOTONES CON PROPORCIÓN FIJA Y SCROLL --- */
+        .nav-list {
+            height: 70%;              /* Ajuste fijo al 70% del espacio disponible */
+            overflow-y: auto;         /* Despliegue de barra lateral si se desborda */
+            padding-right: 5px;       /* Pequeño espacio para que el scroll no encime los botones */
+        }
+
+        /* Personalización estética de la barra de scroll (Opcional) */
+        .nav-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .nav-list::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 10px;
+        }
+        .nav-list::-webkit-scrollbar-thumb {
+            background: rgba(27, 94, 32, 0.2);
+            border-radius: 10px;
+        }
+        .nav-list::-webkit-scrollbar-thumb:hover {
+            background: var(--cbta-green);
+        }
+
         .nav-link-custom {
             display: flex;
             align-items: center;
@@ -180,8 +203,6 @@
                 <a href="./usuarios" target="visor" class="nav-link-custom">
                     <i class="fas fa-user-shield"></i> <span>Reportes</span>
                 </a>
-            
-                
             </div>
         </nav>
 
