@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('carreras');
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

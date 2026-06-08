@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['email'])) {
+    header("Location: ./login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -182,27 +191,43 @@
                 <a href="./crud-db" target="visor" class="nav-link-custom">
                     <i class="fas fa-user-graduate"></i> <span>Personas</span>
                 </a>
-                <a href="./carreras" target="visor" class="nav-link-custom">
-                    <i class="fas fa-book"></i> <span>Carreras</span>
-                </a>
-                <a href="./tutores" target="visor" class="nav-link-custom">
+                <?php if (in_array('carreras', $_SESSION['permisos'])): ?>
+                    <a href="./carreras" target="visor" class="nav-link-custom">
+                        <i class="fas fa-book"></i> <span>Carreras</span>
+                    </a>
+                <?php endif; ?>
+            
+
+                <?php if (in_array('tutores', $_SESSION['permisos'])): ?>
+                    <a href="./tutores" target="visor" class="nav-link-custom">
                     <i class="fas fa-user-tie"></i> <span>Tutores</span>
                 </a>
-                <a href="./grupos" target="visor" class="nav-link-custom">
-                    <i class="fas fa-user-shield"></i> <span>Grupos</span>
+                <?php endif; ?>
+
+
+                <?php if (in_array('grupos', $_SESSION['permisos'])): ?>
+                   <a href="./grupos" target="visor" class="nav-link-custom">
+                      <i class="fas fa-user-shield"></i> <span>Grupos</span>
+                      </a>
+                <?php endif; ?>
                 </a>
                 <a href="./usuarios" target="visor" class="nav-link-custom">
                     <i class="fas fa-user-shield"></i> <span>Usuarios</span>
                 </a>
-                <a href="./usuarios" target="visor" class="nav-link-custom">
+                <a href="./alumnos" target="visor" class="nav-link-custom">
                     <i class="fas fa-user-shield"></i> <span>Alumnos</span>
                 </a>
-                <a href="./usuarios" target="visor" class="nav-link-custom">
+                <a href="./contactos" target="visor" class="nav-link-custom">
                     <i class="fas fa-user-shield"></i> <span>Contactos</span>
                 </a>
-                <a href="./usuarios" target="visor" class="nav-link-custom">
+                <a href="./reportes" target="visor" class="nav-link-custom">
                     <i class="fas fa-user-shield"></i> <span>Reportes</span>
                 </a>
+                 <a href="./sesion/logout.php" class="nav-link-custom">
+                    <i class="fas fa-sign-out"></i> <span>Salir</span>
+                </a>
+            
+                
             </div>
         </nav>
 
