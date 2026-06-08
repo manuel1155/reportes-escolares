@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('grupos');
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

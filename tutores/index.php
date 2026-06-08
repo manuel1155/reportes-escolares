@@ -1,3 +1,13 @@
+
+<?php
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('tutores');
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
