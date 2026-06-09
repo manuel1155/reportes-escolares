@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('grupos');
+
 include './../lib/db.php';
 
 $stmt = $conn->prepare("SELECT * FROM carreras WHERE activo = 1");

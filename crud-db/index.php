@@ -175,7 +175,7 @@ foreach($result as $row) {
         </div>
 
         <div class="mt-4">
-            <a href="./.." class="back-link">
+            <a href="./../inicio_dashboard.html" class="back-link">
                 <i class="fas fa-arrow-left me-1"></i> Regresar al Inicio
             </a>
         </div>

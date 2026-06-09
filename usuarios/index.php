@@ -213,11 +213,12 @@
         </table>
     </div>
 
-    <div class="mt-4 pt-3 border-top">
-        <a href="./.." class="btn-back">
-            <i class="fas fa-chevron-left me-1"></i> Regresar al Menú Principal
+ <div class="mt-4 pt-3 border-top">
+        <a href="../inicio_dashboard.html" class="btn-back">
+            <i class="fas fa-arrow-left me-1"></i> Regresar al inicio
         </a>
-    </div>
+
+        </div>
 </div>
 
 <script>

@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('carreras');
+
 include './../lib/db.php';
 
 $id = $_GET['id'] ?? null;

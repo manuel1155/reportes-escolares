@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('grupos');
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -213,11 +221,12 @@
         </table>
     </div>
 
-    <div class="mt-4 pt-3 border-top">
-        <a href="./.." class="btn-back">
-            <i class="fas fa-arrow-left me-1"></i> Volver al Menú
+     <div class="mt-4 pt-3 border-top">
+        <a href="../inicio_dashboard.html" class="btn-back">
+            <i class="fas fa-arrow-left me-1"></i> Regresar al inicio
         </a>
-    </div>
+
+        </div>
 </div>
 
 <script>

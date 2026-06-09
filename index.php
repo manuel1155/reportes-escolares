@@ -1,9 +1,18 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['email'])) {
+    header("Location: ./login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CBTa 159 | Sistema de Reportes</title>
+    <title>CBTa 159 | Sistema Central</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,164 +21,196 @@
         :root {
             --cbta-green: #1B5E20;
             --cbta-gold: #B8860B;
-            --text-main: #2c3e50;
-            --soft-green: rgba(27, 94, 32, 0.06);
-            --hover-green: rgba(27, 94, 32, 0.1);
+            --sidebar-width: 280px;
+            --header-height: 100px; /* Incrementado un poco para lucir mejor los logos */
         }
 
-        body {
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; 
             font-family: 'Inter', sans-serif;
             background-color: #f4f7f6;
-            background-image: radial-gradient(#d1d1d1 0.8px, transparent 0.8px);
-            background-size: 25px 25px;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0;
         }
 
-        .main-card {
+        /* --- BARRA SUPERIOR (MEMBRETE) --- */
+        .top-header {
+            height: var(--header-height);
             background: #ffffff;
-            border-radius: 30px;
-            padding: 3.5rem 2.5rem;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.06);
-            text-align: center;
-            max-width: 600px;
-            width: 90%;
-            border-top: 8px solid var(--cbta-green);
-            border-bottom: 8px solid var(--cbta-gold);
-        }
-
-        .icon-container {
-            width: 80px;
-            height: 80px;
-            background-color: var(--soft-green);
-            color: var(--cbta-green);
-            border-radius: 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin: 0 auto 1.5rem;
+            justify-content: space-between;
+            padding: 0 40px;
+            border-bottom: 4px solid var(--cbta-gold);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            position: relative;
         }
 
-        h1 {
+        .header-logo {
+            height: 80px; /* Ajuste para que los logos se vean claros */
+            width: auto;
+            object-fit: contain;
+        }
+
+        .header-title {
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .header-title h1 {
             font-weight: 800;
             color: var(--cbta-green);
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            margin: 0;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .description {
-            color: #6c757d;
-            font-size: 1rem;
-            margin-bottom: 2.5rem;
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .wrapper {
+            display: flex;
+            height: calc(100vh - var(--header-height));
+            width: 100vw;
         }
 
-        /* --- SECCIÓN DE BOTONES ESTÉTICOS --- */
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
-            margin-bottom: 1rem;
-        }
-
-        .btn-module {
+        /* --- BARRA LATERAL --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: #ffffff;
+            border-right: 1px solid rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
+            flex-shrink: 0;
+            z-index: 100;
+            padding: 1.5rem;
+        }
+
+        .sidebar-brand {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(27, 94, 32, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .nav-link-custom {
+            display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 20px 15px;
-            background-color: var(--soft-green);
-            color: var(--cbta-green);
-            border: 1.5px solid transparent;
-            border-radius: 18px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            color: #444;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 1px solid transparent;
         }
 
-        .btn-module i {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            transition: transform 0.3s ease;
+        .nav-link-custom i {
+            width: 30px;
+            font-size: 1.2rem;
+            color: var(--cbta-green);
         }
 
-        .btn-module span {
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .nav-link-custom:hover {
+            background: rgba(27, 94, 32, 0.05);
+            color: var(--cbta-green);
+            transform: translateX(5px);
         }
 
-        /* Efectos Hover */
-        .btn-module:hover {
-            background-color: white;
-            border-color: var(--cbta-gold);
-            color: var(--cbta-gold);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(184, 134, 11, 0.1);
+        .nav-link-custom:focus {
+            background: var(--cbta-green);
+            color: white !important;
+        }
+        .nav-link-custom:focus i { color: white; }
+
+        /* --- VISOR DE CONTENIDO --- */
+        .content-viewer {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background: #f4f7f6;
+            position: relative;
         }
 
-        .btn-module:hover i {
-            transform: scale(1.2);
-        }
-
-        .footer-info {
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #f1f1f1;
-        }
-
-        .footer-info small {
-            color: #adb5bd;
-            font-weight: 700;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
+        #main-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
         }
     </style>
 </head>
 <body>
 
-    <div class="main-card">
-        <div class="icon-container">
-            <i class="fas fa-layer-group"></i>
-        </div>
+    <header class="top-header">
+        <img src="./lib/img/logo-cbta.png" alt="Escudo Institucional CBTa 159" class="header-logo">
         
-        <h1>Panel de Gestión</h1>
-        <p class="description">Seleccione el módulo que desea administrar para continuar.</p>
-        
-        <div class="menu-grid">
-            <a href="./crud-db" class="btn-module">
-                <i class="fas fa-user-graduate"></i>
-                <span>Personas</span>
-            </a>
-
-            <a href="./carreras" class="btn-module">
-                <i class="fas fa-book"></i>
-                <span>Carreras</span>
-            </a>
-
-            <a href="./tutores" class="btn-module">
-                <i class="fas fa-user-tie"></i>
-                <span>Tutores</span>
-            </a>
-
-            <a href="./tutores" class="btn-module">
-                <i class="fas fa-user-tie"></i>
-                <span>Reportes</span>
-            </a>
-
-            <a href="./tutores" class="btn-module">
-                <i class="fas fa-user-tie"></i>
-                <span>Grupos</span>
-            </a>
-
+        <div class="header-title">
+            <h1>SISTEMA DE REPORTES</h1>
         </div>
-        
-        <div class="footer-info">
-            <small>CBTA NO. 159 • SISTEMA CENTRAL</small>
-        </div>
+
+        <img src="./lib/img/logo-gorilas.png" alt="Logo Gorilas" class="header-logo">
+    </header>
+
+    <div class="wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fas fa-layer-group fa-2x" style="color: var(--cbta-green);"></i>
+                <div class="fw-bold mt-2" style="color: var(--cbta-green);">GESTIÓN CBTa 159</div>
+            </div>
+
+            <div class="nav-list">
+                <a href="inicio_dashboard.html" target="visor" class="nav-link-custom">
+                    <i class="fas fa-home"></i> <span>Inicio</span>
+                </a>
+                <a href="./crud-db" target="visor" class="nav-link-custom">
+                    <i class="fas fa-user-graduate"></i> <span>Personas</span>
+                </a>
+                <?php if (in_array('carreras', $_SESSION['permisos'])): ?>
+                    <a href="./carreras" target="visor" class="nav-link-custom">
+                        <i class="fas fa-book"></i> <span>Carreras</span>
+                    </a>
+                <?php endif; ?>
+            
+
+                <?php if (in_array('tutores', $_SESSION['permisos'])): ?>
+                    <a href="./tutores" target="visor" class="nav-link-custom">
+                    <i class="fas fa-user-tie"></i> <span>Tutores</span>
+                </a>
+                <?php endif; ?>
+
+
+                <?php if (in_array('grupos', $_SESSION['permisos'])): ?>
+                   <a href="./grupos" target="visor" class="nav-link-custom">
+                      <i class="fas fa-user-shield"></i> <span>Grupos</span>
+                      </a>
+                <?php endif; ?>
+                </a>
+                <a href="./usuarios" target="visor" class="nav-link-custom">
+                    <i class="fas fa-user-shield"></i> <span>Usuarios</span>
+                </a>
+                <a href="./alumnos" target="visor" class="nav-link-custom">
+                    <i class="fas fa-user-shield"></i> <span>Alumnos</span>
+                </a>
+                <a href="./contactos" target="visor" class="nav-link-custom">
+                    <i class="fas fa-user-shield"></i> <span>Contactos</span>
+                </a>
+                <a href="./reportes" target="visor" class="nav-link-custom">
+                    <i class="fas fa-user-shield"></i> <span>Reportes</span>
+                </a>
+                 <a href="./sesion/logout.php" class="nav-link-custom">
+                    <i class="fas fa-sign-out"></i> <span>Salir</span>
+                </a>
+            
+                
+            </div>
+        </nav>
+
+        <main class="content-viewer">
+            <iframe name="visor" id="main-frame" src="inicio_dashboard.html"></iframe>
+        </main>
     </div>
 
 </body>
