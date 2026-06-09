@@ -1,11 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sistema Reportes</title>
+    <style>
+       /* Eliminamos márgenes y obligamos a la pantalla a medir el 100% fijo sin scroll */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; 
+            background-color: #f4f7f6;
+        }
+
+        /* El contenedor ocupa el 100% y centra la imagen en ambos ejes */
+        .contenedor-imagen {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center; /* Centrado horizontal */
+            align-items: center;
+            overflow: auto;     /* Centrado vertical */
+        }
+
+        /* CONFIGURACIÓN ANTIDISTORSIÓN */
+        .contenedor-imagen img {
+            max-width: 90%;    /* No permite que la imagen sea más ancha que el div */
+            max-height: 90%;   /* No permite que la imagen sea más alta que el div */
+            width: auto;        /* Redimensiona el ancho proporcionalmente */
+            height: auto;       /* Redimensiona el alto proporcionalmente */
+            display: block; 
+        }
+    </style>
 </head>
 <body>
-    <h1>Sistema Reportes</h1>
+
+    <div class="contenedor-imagen">
+        <img src="./lib/img/iniciop.png" alt="Logo Bienvenida">
+    </div>
+
 </body>
 </html>
