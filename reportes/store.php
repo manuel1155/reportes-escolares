@@ -1,20 +1,38 @@
 <?php
+
 include './../lib/db.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("Acceso no permitido");
-}
+$alumno_id = $_POST['alumno_id'];
+$causa_id = $_POST['causa_id'];
+$comentarios = $_POST['comentarios'];
 
-if (empty($_POST['descripcion'])) {
-    die("Selecciona una causa");
-}
+$usuario_id = 1;
 
-$stmt = $conn->prepare("INSERT INTO causas_reporte (descripcion, puntos_penalizacion)
-VALUES (?, ?)");
+$stmt = $conn->prepare("
+INSERT INTO reportes
+(
+alumno_id,
+causa_id,
+usuario_id,
+fecha_reporte,
+comentarios
+)
+VALUES
+(
+?,
+?,
+?,
+NOW(),
+?
+)
+");
 
 $stmt->execute([
-    $_POST['descripcion'],
-    $_POST['puntos_penalizacion']
+    $alumno_id,
+    $causa_id,
+    $usuario_id,
+    $comentarios
 ]);
 
-header("Location: index.php");
+header("Location:index.php");
+exit;

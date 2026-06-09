@@ -1,47 +1,63 @@
-<?php
-include './../lib/db.php';
-$stmt = $conn->query("SELECT * FROM causas_reporte");
-$causas = $stmt->fetchAll();
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
-<title>Causas de Reporte</title>
+
+<title>CBTA 159 - Reportes</title>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
-<body class="container mt-4">
+<body class="bg-light">
 
-<h2>Causas de Reporte</h2>
+<div class="container mt-5">
 
-<a href="create.php" class="btn btn-success mb-3">+ Nueva Causa</a>
+<div class="card shadow p-5">
 
-<table class="table table-bordered">
-<tr>
-    <th>ID</th>
-    <th>Descripción</th>
-    <th>Puntos</th>
-    <th>Acciones</th>
-</tr>
+<h2 class="text-center text-success">
 
-<?php foreach($causas as $c): ?>
-<tr>
-    <td><?= $c['id'] ?></td>
-    <td><?= $c['descripcion'] ?></td>
-    <td><?= $c['puntos_penalizacion'] ?></td>
-    <td>
-        <a href="edit.php?id=<?= $c['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
-        <a href="delete.php?id=<?= $c['id'] ?>" class="btn btn-danger btn-sm"
-           onclick="return confirm('¿Eliminar causa?')">Eliminar</a>
-    </td>
-</tr>
-<?php endforeach; ?>
+CBTA No.159
 
-</table>
+</h2>
 
-<a href="../" class="btn btn-secondary">Regresar</a>
+<h4 class="text-center mb-4">
+
+Sistema de Reportes Disciplinarios
+
+</h4>
+
+<form action="buscar.php" method="GET">
+
+<label>
+
+CURP del Alumno
+
+</label>
+
+<input
+type="text"
+name="curp"
+class="form-control form-control-lg"
+autofocus
+required>
+
+<div class="mt-3">
+
+<button class="btn btn-success">
+
+Buscar Alumno
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
 
 </body>
 </html>
