@@ -9,12 +9,11 @@ if (empty($_POST['descripcion'])) {
     die("Selecciona una causa");
 }
 
-$stmt = $conn->prepare("INSERT INTO causas_reporte (descripcion, puntos_penalizacion)
-VALUES (?, ?)");
+$stmt = $conn->prepare("INSERT INTO causas (descripcion)
+VALUES (?)");
 
 $stmt->execute([
-    $_POST['descripcion'],
-    $_POST['puntos_penalizacion']
+    $_POST['descripcion']
 ]);
 
 header("Location: index.php");
