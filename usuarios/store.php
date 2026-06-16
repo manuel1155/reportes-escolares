@@ -5,20 +5,63 @@ $success = false;
 $error = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST['nombre'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $rol = $_POST['rol'];
+    $email = $_POST['email'];
+$password = $_POST['password'];
 
-    // Insertamos asegurando que el campo 'activo' sea 1 por defecto
-    $sql = "INSERT INTO usuarios (nombre, username, password, rol, activo) 
-            VALUES (:nombre, :username, :password, :rol, 1)";
+$alumnos       = isset($_POST['alumnos']) ? 1 : 0;
+$carreras      = isset($_POST['carreras']) ? 1 : 0;
+$causa         = isset($_POST['causa']) ? 1 : 0;
+$contactos     = isset($_POST['contactos']) ? 1 : 0;
+$grupos        = isset($_POST['grupos']) ? 1 : 0;
+$inscripciones = isset($_POST['inscripciones']) ? 1 : 0;
+$personas      = isset($_POST['personas']) ? 1 : 0;
+$reportes      = isset($_POST['reportes']) ? 1 : 0;
+$tutores       = isset($_POST['tutores']) ? 1 : 0;
+
+$sql = "INSERT INTO usuarios (
+            email,
+            password,
+            alumnos,
+            carreras,
+            causa,
+            contactos,
+            grupos,
+            inscripciones,
+            personas,
+            reportes,
+            tutores,
+            activo
+        ) VALUES (
+            :email,
+            :password,
+            :alumnos,
+            :carreras,
+            :causa,
+            :contactos,
+            :grupos,
+            :inscripciones,
+            :personas,
+            :reportes,
+            :tutores,
+            1
+        )";
+
+$stmt = $conn->prepare($sql);
+
+$stmt->bindParam(':email', $email);
+$stmt->bindParam(':password', $password);
+
+$stmt->bindParam(':alumnos', $alumnos);
+$stmt->bindParam(':carreras', $carreras);
+$stmt->bindParam(':causa', $causa);
+$stmt->bindParam(':contactos', $contactos);
+$stmt->bindParam(':grupos', $grupos);
+$stmt->bindParam(':inscripciones', $inscripciones);
+$stmt->bindParam(':personas', $personas);
+$stmt->bindParam(':reportes', $reportes);
+$stmt->bindParam(':tutores', $tutores);
+$stmt->bindParam(':usuarios', $usuarios);
     
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':nombre', $nombre);
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password);
-    $stmt->bindParam(':rol', $rol);
 
     if ($stmt->execute()) {
         $success = true;

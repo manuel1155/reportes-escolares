@@ -138,18 +138,10 @@
 
     <form action="store.php" method="post">
         <div class="mb-3">
-            <label class="form-label">Nombre Completo</label>
-            <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                <input type="text" class="form-control" name="nombre" placeholder="Ej. Juan Pérez" required>
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Nombre de Usuario</label>
+            <label class="form-label">Email</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-at"></i></span>
-                <input type="text" class="form-control" name="username" placeholder="usuario123" required>
+                <input type="email" class="form-control" name="email" placeholder="correo@cbta159.com.mx" required>
             </div>
         </div>
 
@@ -162,19 +154,97 @@
         </div>
 
         <div class="mb-4">
-            <label class="form-label">Rol de Sistema</label>
-            <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-shield-halved"></i></span>
-                <select name="rol" class="form-select" required>
-                    <option value="" selected disabled>Seleccionar rol...</option>
-                    <?php
-                    $roles = ["prefectura", "administrador", "maestro"];
-                    foreach ($roles as $r): ?>
-                        <option value="<?= $r ?>"><?= ucfirst($r) ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-        </div>
+    <label class="form-label">Permisos</label>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+
+            <thead class="table-light">
+                <tr>
+                    <th width="20%" class="text-center">
+                        <i class="fas fa-check-square"></i>
+                    </th>
+                    <th>Módulo</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="alumnos" value="1">
+                    </td>
+                    <td>Alumnos</td>
+                </tr>
+
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="carreras" value="1">
+                    </td>
+                    <td>Carreras</td>
+                </tr>
+
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="causa" value="1">
+                    </td>
+                    <td>Causa</td>
+                </tr>
+
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="contactos" value="1">
+                    </td>
+                    <td>Contactos</td>
+                </tr>
+
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="grupos" value="1">
+                    </td>
+                    <td>Grupos</td>
+                </tr>
+
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="inscripciones" value="1">
+                    </td>
+                    <td>Inscripciones</td>
+                </tr>
+
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="personas" value="1">
+                    </td>
+                    <td>Personas</td>
+                </tr>
+
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="reportes" value="1">
+                    </td>
+                    <td>Reportes</td>
+                </tr>
+
+                 <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="usuarios" value="1">
+                    </td>
+                    <td>usuarios</td>
+                </tr>
+
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="tutores" value="1">
+                    </td>
+                    <td>Tutores</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
 
         <button type="submit" class="btn-submit">
             <i class="fas fa-save me-2"></i>Crear Usuario

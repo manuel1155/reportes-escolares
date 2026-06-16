@@ -1,14 +1,14 @@
 <?php
 include './../lib/db.php';
 
-if (!isset($_GET['id_usuario'])) {
+if (!isset($_GET['id'])) {
     header("Location: index.php");
     exit();
 }
 
-$id_usuario = $_GET['id_usuario'];
-$stmt = $conn->prepare("SELECT * FROM usuarios WHERE id_usuario = :id_usuario");
-$stmt->bindParam(':id_usuario', $id_usuario);
+$id = $_GET['id'];
+$stmt = $conn->prepare("SELECT * FROM usuarios WHERE id = :id");
+$stmt->bindParam(':id', $id);
 $stmt->execute(); 
 $usuario = $stmt->fetch();
 
@@ -154,21 +154,14 @@ if (!$usuario) {
     <h1>Modificar Usuario</h1>
 
     <form id="editForm" action="update.php" method="post">
-        <input type="hidden" name="id_usuario" value="<?= $usuario['id_usuario']; ?>">
+       <input type="hidden" name="id" value="<?= $usuario['id']; ?>">
 
+        
         <div class="mb-3">
-            <label class="form-label">Nombre Completo</label>
-            <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-signature"></i></span>
-                <input type="text" class="form-control" name="nombre" value="<?= htmlspecialchars($usuario['nombre']); ?>" required>
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Username</label>
+            <label class="form-label">email</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                <input type="text" class="form-control" name="username" value="<?= htmlspecialchars($usuario['username']); ?>" required>
+                <input type="email" class="form-control" name="email" value="<?= htmlspecialchars($usuario['email']); ?>" required>
             </div>
         </div>
 
@@ -180,21 +173,98 @@ if (!$usuario) {
             </div>
         </div>
 
-        <div class="mb-4">
-            <label class="form-label">Rol Asignado</label>
-            <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-user-shield"></i></span>
-                <select name="rol" class="form-select" required>
-                    <?php
-                    $roles = ["prefectura", "administrador", "maestro"];
-                    foreach ($roles as $r): ?>
-                        <option value="<?= $r ?>" <?= ($usuario['rol'] == $r) ? 'selected' : '' ?>>
-                            <?= ucfirst($r) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-        </div>
+       <div class="mb-4">
+    <label class="form-label">Permisos del Sistema</label>
+
+    <table class="table table-bordered text-center">
+        <thead class="table-light">
+            <tr>
+                <th>Módulo</th>
+                <th>Acceso</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Alumnos</td>
+                <td>
+                    <input type="checkbox" name="alumnos" value="1"
+                    <?= $usuario['alumnos'] ? 'checked' : '' ?>>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Carreras</td>
+                <td>
+                    <input type="checkbox" name="carreras" value="1"
+                    <?= $usuario['carreras'] ? 'checked' : '' ?>>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Causa</td>
+                <td>
+                    <input type="checkbox" name="causa" value="1"
+                    <?= $usuario['causa'] ? 'checked' : '' ?>>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Contactos</td>
+                <td>
+                    <input type="checkbox" name="contactos" value="1"
+                    <?= $usuario['contactos'] ? 'checked' : '' ?>>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Grupos</td>
+                <td>
+                    <input type="checkbox" name="grupos" value="1"
+                    <?= $usuario['grupos'] ? 'checked' : '' ?>>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Inscripciones</td>
+                <td>
+                    <input type="checkbox" name="inscripciones" value="1"
+                    <?= $usuario['inscripciones'] ? 'checked' : '' ?>>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Personas</td>
+                <td>
+                    <input type="checkbox" name="personas" value="1"
+                    <?= $usuario['personas'] ? 'checked' : '' ?>>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Reportes</td>
+                <td>
+                    <input type="checkbox" name="reportes" value="1"
+                    <?= $usuario['reportes'] ? 'checked' : '' ?>>
+                </td>
+            </tr>
+                <tr>
+                <td>usuarios</td>
+                <td>
+                    <input type="checkbox" name="usuarios" value="1"
+                    <?= $usuario['usuarios'] ? 'checked' : '' ?>>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Tutores</td>
+                <td>
+                    <input type="checkbox" name="tutores" value="1"
+                    <?= $usuario['tutores'] ? 'checked' : '' ?>>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
         <button type="button" onclick="confirmarCambios()" class="btn-update">
             <i class="fas fa-sync-alt me-2"></i>Actualizar Datos
