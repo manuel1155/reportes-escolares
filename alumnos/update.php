@@ -7,49 +7,41 @@ $msg = "";
 
 try {
     // Validar campos obligatorios de forma silenciosa
-    if (empty($_POST['id']) || empty($_POST['matricula']) || empty($_POST['nombre']) || empty($_POST['apellido_paterno'])) {
+    if (empty($_POST['id']) || empty($_POST['curp']) || empty($_POST['nombre']) || empty($_POST['primer_apellido'])) {
         $error = true;
         $msg = "Faltan datos obligatorios para actualizar el expediente.";
     } else {
-        // Validar existencia de grupo_id
-        $grupo_id = null;
-        if (!empty($_POST['grupo_id'])) {
-            $check = $conn->prepare("SELECT id FROM grupos WHERE id = ?");
-            $check->execute([$_POST['grupo_id']]);
-            if ($check->fetch()) {
-                $grupo_id = $_POST['grupo_id'];
-            }
-        }
+    
 
         // Ejecutar actualización
         $sql = "UPDATE alumnos SET 
-                matricula = ?, 
+                curp = ?, 
                 nombre = ?, 
-                apellido_paterno = ?, 
-                apellido_materno = ?, 
-                grupo_id = ?
+                primer_apellido = ?, 
+                segundo_apellido = ?
                 WHERE id = ?";
 
         $stmt = $conn->prepare($sql);
         $stmt->execute([
-            $_POST['matricula'],
+            $_POST['curp'],
             $_POST['nombre'],
-            $_POST['apellido_paterno'],
-            $_POST['apellido_materno'],
-            $grupo_id,
+            $_POST['primer_apellido'],
+            $_POST['segundo_apellido'],
             $_POST['id']
         ]);
 
         $success = true;
-    }
-} catch (PDOException $e) {
+    } 
+ } catch (PDOException $e) {
     $error = true;
     if ($e->getCode() == 23000) {
-        $msg = "La matrícula ingresada ya pertenece a otro alumno.";
-    } else {
-        $msg = "Error crítico de base de datos.";
-    }
+        $msg = "La curp ingresada ya pertenece a otro alumno.";
+   } else {
+
+    $msg = $e->getMessage();
+   }
 }
+
 ?>
 
 <!DOCTYPE html>

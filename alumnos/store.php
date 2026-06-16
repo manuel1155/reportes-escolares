@@ -7,25 +7,24 @@ $msg = "";
 
 try {
     // Validar campos obligatorios sin romper la estética con die()
-    if (empty($_POST['matricula']) || empty($_POST['nombre']) || empty($_POST['apellido_paterno'])) {
+    if (empty($_POST['id']) || empty($_POST['nombre']) || empty($_POST['primer_apellido'])) {
         $error = true;
         $msg = "Faltan campos obligatorios para el registro.";
     } else {
-        // Manejo de grupo_id opcional
-        $grupo_id = !empty($_POST['grupo_id']) ? $_POST['grupo_id'] : null;
-
-        $sql = "INSERT INTO alumnos 
-                (matricula, nombre, apellido_paterno, apellido_materno, grupo_id, activo)
-                VALUES (?, ?, ?, ?, ?, 1)";
+       
+       $sql = "INSERT INTO alumnos 
+        (id, curp, nombre, primer_apellido, segundo_apellido, activo)
+        VALUES (?, ?, ?, ?, ?, 1)";
 
         $stmt = $conn->prepare($sql);
-        $stmt->execute([
-            $_POST['matricula'],
-            $_POST['nombre'],
-            $_POST['apellido_paterno'],
-            $_POST['apellido_materno'],
-            $grupo_id // Corregido: antes decía $grupos
-        ]);
+       $stmt->execute([
+    $_POST['id'],
+    $_POST['curp'],
+    $_POST['nombre'],
+    $_POST['primer_apellido'],
+    $_POST['segundo_apellido']
+    ]);
+    
 
         $success = true;
     }
@@ -33,7 +32,7 @@ try {
     $error = true;
     // Captura de error de duplicado (ej. misma matrícula)
     if ($e->getCode() == 23000) {
-        $msg = "La matrícula ya se encuentra registrada en el sistema.";
+        $msg = "La curp ya se encuentra registrada en el sistema.";
     } else {
         $msg = "Error interno: " . $e->getMessage();
     }

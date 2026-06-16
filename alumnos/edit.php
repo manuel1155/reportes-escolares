@@ -1,6 +1,5 @@
 <?php
 include './../lib/db.php';
-
 if (!isset($_GET['id'])) {
     header("Location: index.php");
     exit();
@@ -9,7 +8,8 @@ if (!isset($_GET['id'])) {
 $id = $_GET['id'];
 $stmt = $conn->prepare("SELECT * FROM alumnos WHERE id = ?");
 $stmt->execute([$id]);
-$alumno = $stmt->fetch();
+$alumno= $stmt->fetch();
+
 
 if (!$alumno) {
     header("Location: index.php");
@@ -174,10 +174,18 @@ if (!$alumno) {
         <div class="section-label">Clave de Registro</div>
         
         <div class="mb-4">
-            <label class="form-label">Matrícula</label>
+            <label class="form-label">Numero de control</label>
             <div class="input-group">
                 <span class="input-group-text bg-light border-0 text-muted"><i class="fas fa-hashtag"></i></span>
-                <input type="text" name="matricula" value="<?= htmlspecialchars($alumno['matricula']) ?>" class="form-control" style="border-left: none;" required>
+                <input type="text" name="numero_de_control" value="<?= htmlspecialchars($alumno['id']) ?>" class="form-control" style="border-left: none;" required>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Curp</label>
+            <div class="input-group">
+                <span class="input-group-text bg-light border-0 text-muted"><i class="fas fa-hashtag"></i></span>
+                <input type="text" name="curp" value="<?= htmlspecialchars($alumno['curp']) ?>" class="form-control" style="border-left: none;" required>
             </div>
         </div>
 
@@ -190,12 +198,12 @@ if (!$alumno) {
 
         <div class="row mb-4">
             <div class="col-md-6 mb-3 mb-md-0">
-                <label class="form-label">Apellido Paterno</label>
-                <input type="text" name="apellido_paterno" value="<?= htmlspecialchars($alumno['apellido_paterno']) ?>" class="form-control" required>
+                <label class="form-label">Primer_apellido</label>
+                <input type="text" name="primer_apellido" value="<?= htmlspecialchars($alumno['primer_apellido']) ?>" class="form-control" required>
             </div>
             <div class="col-md-6">
-                <label class="form-label">Apellido Materno</label>
-                <input type="text" name="apellido_materno" value="<?= htmlspecialchars($alumno['apellido_materno']) ?>" class="form-control">
+                <label class="form-label">segundo_apellido</label>
+                <input type="text" name="segundo_apellido" value="<?= htmlspecialchars($alumno['segundo_apellido']) ?>" class="form-control">
             </div>
         </div>
 
