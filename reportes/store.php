@@ -1,4 +1,5 @@
 <?php
+
 include './../lib/db.php';
 
 $success = false;

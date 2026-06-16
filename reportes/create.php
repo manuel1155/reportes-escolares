@@ -1,3 +1,27 @@
+<?php
+
+include './../lib/db.php';
+
+$id = $_GET['id'];
+
+$stmt = $conn->prepare("
+SELECT *
+FROM alumnos
+WHERE id=?
+");
+
+$stmt->execute([$id]);
+
+$alumno = $stmt->fetch();
+
+$causas = $conn->query("
+SELECT *
+FROM causas_reporte
+ORDER BY descripcion
+")->fetchAll();
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

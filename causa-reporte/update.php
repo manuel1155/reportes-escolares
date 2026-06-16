@@ -4,21 +4,19 @@ include './../lib/db.php';
 $success = false;
 $error = false;
 
-// Validamos que el ID exista antes de proceder
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        $stmt = $conn->prepare("DELETE FROM causas_reporte WHERE id = :id");
-        $stmt->bindParam(':id', $id);
+        $stmt = $conn->prepare("UPDATE causas SET descripcion = ? WHERE id = ?");
         
-        if ($stmt->execute()) {
+        if ($stmt->execute([
+            $_POST['descripcion'],
+            $_POST['id']
+        ])) {
             $success = true;
         } else {
             $error = true;
         }
-    } catch (PDOException $e) {
-        // Manejo de error por si la causa está siendo usada en algún reporte (llave foránea)
+    } catch (Exception $e) {
         $error = true;
     }
 }
@@ -29,7 +27,7 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eliminando Causa | CBTa 159</title>
+    <title>Sincronizando... | CBTa 159</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -46,48 +44,50 @@ if (isset($_GET['id'])) {
             margin: 0;
         }
 
-        .delete-card {
+        .update-loader {
             text-align: center;
             background: white;
             padding: 3rem;
             border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border-bottom: 6px solid #B8860B; /* Acento Dorado */
         }
 
-        .spinner-del {
+        .spinner-sync {
             width: 50px;
             height: 50px;
-            border: 4px solid rgba(220, 53, 69, 0.1);
-            border-left-color: #dc3545;
+            border: 4px solid rgba(184, 134, 11, 0.1);
+            border-top-color: #B8860B;
             border-radius: 50%;
             display: inline-block;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .text-del {
+        .sync-text {
             margin-top: 1.5rem;
-            color: #6c757d;
+            color: #555;
             font-weight: 600;
             font-size: 0.9rem;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
 
-    <div class="delete-card animate__animated animate__fadeIn">
+    <div class="update-loader animate__animated animate__fadeIn">
         <?php if ($success): ?>
             <script>
                 setTimeout(() => {
                     Swal.fire({
-                        title: 'Causa Eliminada',
-                        text: 'La infracción ya no estará disponible para nuevos reportes.',
+                        title: 'Cambios Guardados',
+                        text: 'La causa ha sido actualizada en el catálogo correctamente.',
                         icon: 'success',
-                        iconColor: '#1B5E20',
+                        iconColor: '#B8860B',
                         confirmButtonColor: '#1B5E20',
-                        confirmButtonText: 'Continuar',
-                        showClass: { popup: 'animate__animated animate__fadeOutUp' }
+                        confirmButtonText: 'Regresar',
+                        showClass: { popup: 'animate__animated animate__zoomIn' }
                     }).then(() => {
                         window.location.href = 'index.php';
                     });
@@ -97,20 +97,21 @@ if (isset($_GET['id'])) {
 
         <?php if ($error): ?>
             <script>
+                console.log(<?php $error?>)
                 Swal.fire({
-                    title: 'No se pudo eliminar',
-                    text: 'Es posible que esta causa esté vinculada a reportes existentes.',
+                    title: 'Error de Sistema',
+                    text: 'No se pudieron aplicar los cambios en la base de datos.',
                     icon: 'error',
                     confirmButtonColor: '#dc3545',
-                    confirmButtonText: 'Entendido'
+                    confirmButtonText: 'Reintentar'
                 }).then(() => {
                     window.location.href = 'index.php';
                 });
             </script>
         <?php endif; ?>
 
-        <div class="spinner-del"></div>
-        <div class="text-del">Actualizando catálogo de infracciones...</div>
+        <div class="spinner-sync"></div>
+        <div class="sync-text">Actualizando parámetros de penalización...</div>
     </div>
 
 </body>
