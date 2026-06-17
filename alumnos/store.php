@@ -13,8 +13,8 @@ try {
     } else {
        
        $sql = "INSERT INTO alumnos 
-        (id, curp, nombre, primer_apellido, segundo_apellido, activo)
-        VALUES (?, ?, ?, ?, ?, 1)";
+        (id, curp, nombre, primer_apellido, segundo_apellido, f_registro, activo)
+        VALUES (?, ?, ?, ?, ?, NOW(), 1";
 
         $stmt = $conn->prepare($sql);
        $stmt->execute([

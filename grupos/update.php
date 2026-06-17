@@ -50,8 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 grupo = :grupo,
                 periodo = :periodo,
                 id_carrera = :id_carrera,
-                id_tutor = :id_tutor
-            WHERE id = :id";
+                id_tutor = :id_tutor,
+                f_modificado = NOW()  WHERE id = :id";
 
     $stmt = $conn->prepare($sql);
 

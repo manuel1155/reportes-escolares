@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('causa-reporte');
+
 include './../lib/db.php';
 // Aseguramos que la consulta traiga las causas activas y las ordene de manera consistente
 $stmt = $conn->query("SELECT * FROM causas WHERE activo = 1 ORDER BY id ASC");

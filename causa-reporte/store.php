@@ -9,8 +9,8 @@ if (empty($_POST['descripcion'])) {
     die("Selecciona una causa");
 }
 
-$stmt = $conn->prepare("INSERT INTO causas (descripcion)
-VALUES (?)");
+$stmt = $conn->prepare("INSERT INTO causas (descripcion, f_registro)
+VALUES (?, NOW())");
 
 $stmt->execute([
     $_POST['descripcion']

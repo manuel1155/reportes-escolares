@@ -6,7 +6,7 @@ $error = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        $stmt = $conn->prepare("UPDATE causas SET descripcion = ? WHERE id = ?");
+        $stmt = $conn->prepare("UPDATE causas SET descripcion = ?, f_modificado = NOW() WHERE id = ?");
         
         if ($stmt->execute([
             $_POST['descripcion'],

@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $primer_apellido = $_POST['primer_apellido'];
     $segundo_apellido = $_POST['segundo_apellido'];
 
-    $sql = "UPDATE tutores SET nombre = :nombre, primer_apellido = :primer_apellido, segundo_apellido = :segundo_apellido WHERE id = :id";
+    $sql = "UPDATE tutores SET nombre = :nombre, primer_apellido = :primer_apellido, segundo_apellido = :segundo_apellido, f_modificado = NOW() WHERE id = :id";
     $stmt = $conn->prepare($sql);
 
     $stmt->bindParam(':id', $id);

@@ -199,7 +199,14 @@ if (!isset($_SESSION['email'])) {
                         <i class="fas fa-book"></i> <span>Carreras</span>
                     </a>
                 <?php endif; ?>
-            
+                 
+
+                <?php if (in_array('causas', $_SESSION['permisos'])): ?>
+                    <a href="./causa-reporte" target="visor" class="nav-link-custom">
+                    <i class="fas fa-user-tie"></i> <span>Causas</span>
+                </a>
+                <?php endif; ?>
+
 
                 <?php if (in_array('tutores', $_SESSION['permisos'])): ?>
                     <a href="./tutores" target="visor" class="nav-link-custom">

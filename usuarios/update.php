@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $alumnos       = isset($_POST['alumnos']) ? 1 : 0;
     $carreras      = isset($_POST['carreras']) ? 1 : 0;
-    $causa         = isset($_POST['causa']) ? 1 : 0;
+    $causas        = isset($_POST['causas']) ? 1 : 0;
     $contactos     = isset($_POST['contactos']) ? 1 : 0;
     $grupos        = isset($_POST['grupos']) ? 1 : 0;
     $inscripciones = isset($_POST['inscripciones']) ? 1 : 0;
@@ -26,25 +26,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 password = :password,
                 alumnos = :alumnos,
                 carreras = :carreras,
-                causa = :causa,
+                causas = :causas,
                 contactos = :contactos,
                 grupos = :grupos,
                 inscripciones = :inscripciones,
                 personas = :personas,
                 reportes = :reportes,
                 tutores = :tutores,
-                usuarios = :usuarios
-            WHERE id = :id";
+                usuarios = :usuarios,
+                f_modificado = NOW() WHERE id = :id";
 
     $stmt = $conn->prepare($sql);
 
     $stmt->bindParam(':id', $id);
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':password', $password);
-
     $stmt->bindParam(':alumnos', $alumnos);
     $stmt->bindParam(':carreras', $carreras);
-    $stmt->bindParam(':causa', $causa);
+    $stmt->bindParam(':causas', $causas);
     $stmt->bindParam(':contactos', $contactos);
     $stmt->bindParam(':grupos', $grupos);
     $stmt->bindParam(':inscripciones', $inscripciones);

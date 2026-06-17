@@ -18,8 +18,8 @@ try {
                 curp = ?, 
                 nombre = ?, 
                 primer_apellido = ?, 
-                segundo_apellido = ?
-                WHERE id = ?";
+                segundo_apellido = ?,
+                f_modificado = NOW() WHERE id = ?";
 
         $stmt = $conn->prepare($sql);
         $stmt->execute([

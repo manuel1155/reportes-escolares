@@ -1,5 +1,16 @@
 <?php
+
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('carreras');
+
+
 include './../lib/db.php';
+
+
+
 // Ordenamos por apellido paterno para que sea un listado escolar natural
 $stmt = $conn->prepare("SELECT * FROM alumnos ORDER BY primer_apellido ASC"); 
 $stmt->execute();

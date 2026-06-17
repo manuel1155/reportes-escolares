@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('causa-reporte');
+
 include './../lib/db.php';
 
 if (!isset($_GET['id'])) {

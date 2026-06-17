@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('usuarios');
+
 include './../lib/db.php';
 
 if (!isset($_GET['id'])) {
@@ -201,10 +207,10 @@ if (!$usuario) {
             </tr>
 
             <tr>
-                <td>Causa</td>
+                <td>Causas</td>
                 <td>
-                    <input type="checkbox" name="causa" value="1"
-                    <?= $usuario['causa'] ? 'checked' : '' ?>>
+                    <input type="checkbox" name="causas" value="1"
+                    <?= $usuario['causas'] ? 'checked' : '' ?>>
                 </td>
             </tr>
 

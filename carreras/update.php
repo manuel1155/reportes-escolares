@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'];
     $nombre = $_POST['nombre'];
 
-    $sql = "UPDATE carreras SET nombre = :nombre WHERE id = :id";
+    $sql = "UPDATE carreras SET nombre = :nombre, f_modificado = NOW() WHERE id = :id";
     $stmt = $conn->prepare($sql);
 
     if ($stmt->execute([':nombre' => $nombre, ':id' => $id])) {

@@ -1,4 +1,12 @@
 <?php
+
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('alumnos');
+
+
 include './../lib/db.php';
 if (!isset($_GET['id'])) {
     header("Location: index.php");
