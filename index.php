@@ -187,16 +187,26 @@ if (!isset($_SESSION['email'])) {
             <div class="nav-list">
                 <a href="inicio_dashboard.html" target="visor" class="nav-link-custom">
                     <i class="fas fa-home"></i> <span>Inicio</span>
-                </a>
+                
+                    <?php if (in_array('personas', $_SESSION['permisos'])): ?>
                 <a href="./crud-db" target="visor" class="nav-link-custom">
                     <i class="fas fa-user-graduate"></i> <span>Personas</span>
-                </a>
+                   </a>
+                <?php endif; ?>
+            
                 <?php if (in_array('carreras', $_SESSION['permisos'])): ?>
                     <a href="./carreras" target="visor" class="nav-link-custom">
                         <i class="fas fa-book"></i> <span>Carreras</span>
                     </a>
                 <?php endif; ?>
-            
+                 
+
+                <?php if (in_array('causas', $_SESSION['permisos'])): ?>
+                    <a href="./causa-reporte" target="visor" class="nav-link-custom">
+                    <i class="fas fa-user-tie"></i> <span>Causas</span>
+                </a>
+                <?php endif; ?>
+
 
                 <?php if (in_array('tutores', $_SESSION['permisos'])): ?>
                     <a href="./tutores" target="visor" class="nav-link-custom">
@@ -210,19 +220,32 @@ if (!isset($_SESSION['email'])) {
                       <i class="fas fa-user-shield"></i> <span>Grupos</span>
                       </a>
                 <?php endif; ?>
-                </a>
-                <a href="./usuarios" target="visor" class="nav-link-custom">
+                
+               <?php if (in_array('usuarios', $_SESSION['permisos'])): ?>
+                    <a href="./usuarios" target="visor" class="nav-link-custom">
                     <i class="fas fa-user-shield"></i> <span>Usuarios</span>
-                </a>
+                   </a>
+              <?php endif; ?>
+
+              <?php if (in_array('alumnos', $_SESSION['permisos'])): ?>
                 <a href="./alumnos" target="visor" class="nav-link-custom">
                     <i class="fas fa-user-shield"></i> <span>Alumnos</span>
-                </a>
+                    </a>
+            <?php endif; ?>
+
+            <?php if (in_array('contactos', $_SESSION['permisos'])): ?>
                 <a href="./contactos" target="visor" class="nav-link-custom">
                     <i class="fas fa-user-shield"></i> <span>Contactos</span>
-                </a>
+                   </a>
+            <?php endif; ?>
+
+            <?php if (in_array('reportes', $_SESSION['permisos'])): ?>
                 <a href="./reportes" target="visor" class="nav-link-custom">
                     <i class="fas fa-user-shield"></i> <span>Reportes</span>
-                </a>
+                   </a>
+            <?php endif; ?>
+
+
                  <a href="./sesion/logout.php" class="nav-link-custom">
                     <i class="fas fa-sign-out"></i> <span>Salir</span>
                 </a>

@@ -4,7 +4,7 @@ function validarPermiso($permiso)
 {
     // Verificar que exista una sesión activa
     if (!isset($_SESSION['email'])) {
-        header("Location: /errores/403.php");
+        header("Location: ./../errores/403.php");
         exit;
     }
 

@@ -5,33 +5,61 @@ $success = false;
 $error = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_usuario = $_POST['id_usuario'];
-    $nombre = $_POST['nombre'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $rol = $_POST['rol'];
 
-    $sql = "UPDATE usuarios 
-            SET nombre = :nombre,
-                username = :username,
+    $id = $_POST['id'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $alumnos       = isset($_POST['alumnos']) ? 1 : 0;
+    $carreras      = isset($_POST['carreras']) ? 1 : 0;
+    $causas        = isset($_POST['causas']) ? 1 : 0;
+    $contactos     = isset($_POST['contactos']) ? 1 : 0;
+    $grupos        = isset($_POST['grupos']) ? 1 : 0;
+    $inscripciones = isset($_POST['inscripciones']) ? 1 : 0;
+    $personas      = isset($_POST['personas']) ? 1 : 0;
+    $reportes      = isset($_POST['reportes']) ? 1 : 0;
+    $tutores       = isset($_POST['tutores']) ? 1 : 0;
+    $usuarios       = isset($_POST['usuarios']) ? 1 : 0;
+
+    $sql = "UPDATE usuarios
+            SET email = :email,
                 password = :password,
-                rol = :rol
-            WHERE id_usuario = :id_usuario";
+                alumnos = :alumnos,
+                carreras = :carreras,
+                causas = :causas,
+                contactos = :contactos,
+                grupos = :grupos,
+                inscripciones = :inscripciones,
+                personas = :personas,
+                reportes = :reportes,
+                tutores = :tutores,
+                usuarios = :usuarios,
+                f_modificado = NOW() WHERE id = :id";
 
     $stmt = $conn->prepare($sql);
 
-    $stmt->bindParam(':id_usuario', $id_usuario);
-    $stmt->bindParam(':nombre', $nombre);
-    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':email', $email);
     $stmt->bindParam(':password', $password);
-    $stmt->bindParam(':rol', $rol);
+    $stmt->bindParam(':alumnos', $alumnos);
+    $stmt->bindParam(':carreras', $carreras);
+    $stmt->bindParam(':causas', $causas);
+    $stmt->bindParam(':contactos', $contactos);
+    $stmt->bindParam(':grupos', $grupos);
+    $stmt->bindParam(':inscripciones', $inscripciones);
+    $stmt->bindParam(':personas', $personas);
+    $stmt->bindParam(':reportes', $reportes);
+    $stmt->bindParam(':tutores', $tutores);
+    $stmt->bindParam(':usuarios', $usuarios);
 
-    if($stmt->execute()){
+
+    if ($stmt->execute()) {
         $success = true;
     } else {
         $error = true;
     }
-}
+
+    }
 ?>
 
 <!DOCTYPE html>

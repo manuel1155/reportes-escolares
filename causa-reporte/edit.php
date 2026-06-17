@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('causa-reporte');
+
 include './../lib/db.php';
 
 if (!isset($_GET['id'])) {
@@ -7,7 +13,7 @@ if (!isset($_GET['id'])) {
 }
 
 $id = $_GET['id'];
-$stmt = $conn->prepare("SELECT * FROM causas_reporte WHERE id = ?");
+$stmt = $conn->prepare("SELECT * FROM causas WHERE id = ?");
 $stmt->execute([$id]);
 $c = $stmt->fetch();
 
@@ -151,11 +157,6 @@ if (!$c) {
         <div class="mb-3">
             <label class="form-label">Descripción de la Causa</label>
             <input type="text" name="descripcion" value="<?= htmlspecialchars($c['descripcion']) ?>" class="form-control" placeholder="Ej. Llegar tarde" required>
-        </div>
-
-        <div class="mb-4">
-            <label class="form-label">Puntos de Penalización</label>
-            <input type="number" name="puntos_penalizacion" value="<?= $c['puntos_penalizacion'] ?>" class="form-control" min="1" max="100" required>
         </div>
 
         <button type="submit" class="btn btn-update">

@@ -7,7 +7,7 @@ $success = false;
 
 if ($id_usuario) {
     // Borrado lógico (activo = 0)
-    $sql = "UPDATE usuarios SET activo = 0 WHERE id_usuario = :id_usuario";
+    $sql = "UPDATE usuarios SET activo = 0 WHERE id = :id_usuario";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id_usuario', $id_usuario);
 

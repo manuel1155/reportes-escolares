@@ -1,7 +1,18 @@
 <?php
+
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('carreras');
+
+
 include './../lib/db.php';
+
+
+
 // Ordenamos por apellido paterno para que sea un listado escolar natural
-$stmt = $conn->prepare("SELECT * FROM alumnos ORDER BY apellido_paterno ASC");
+$stmt = $conn->prepare("SELECT * FROM alumnos ORDER BY primer_apellido ASC"); 
 $stmt->execute();
 $alumnos = $stmt->fetchAll();
 ?>
@@ -159,36 +170,61 @@ $alumnos = $stmt->fetchAll();
         </a>
     </div>
 
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Matrícula</th>
-                    <th>Nombre Completo</th>
-                    <th class="text-center">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($alumnos as $a): ?>
-                <tr>
-                    <td>
-                        <span class="matricula-tag"><?= htmlspecialchars($a['matricula']) ?></span>
-                    </td>
-                    <td>
-                        <div class="fw-bold text-dark"><?= htmlspecialchars($a['apellido_paterno']." ".$a['apellido_materno']) ?></div>
-                        <div class="text-muted small"><?= htmlspecialchars($a['nombre']) ?></div>
-                    </td>
-                    <td class="text-center">
-                        <a href="edit.php?id=<?= $a['id'] ?>" class="btn-action btn-edit" title="Editar Expediente">
-                            <i class="fas fa-user-pen"></i>
-                        </a>
-                        <a href="#" onclick="confirmarEliminar(<?= $a['id'] ?>)" class="btn-action btn-delete" title="Eliminar Alumno">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
+        <div class="table-responsive">
+             <table class="table">
+              <thead>
+            <tr>
+                <th>No Control</th>
+                <th>Nombre Completo</th>
+                <th>curp</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+             </tr>
+       
+        </thead> 
+        <tbody>
+            <?php foreach($alumnos as $a): ?>
+            <tr>
+
+            <td>
+            <span class="no-control-tag">
+                  <?= htmlspecialchars($a['id']) ?>
+            </span>
+       </td>
+
+       <td>
+        <?= htmlspecialchars(
+            $a['nombre'] . ' ' .
+            $a['primer_apellido'] . ' ' .
+            $a['segundo_apellido']
+        ) ?>
+        </td>
+
+        <td>
+        <?= htmlspecialchars($a['curp'] ) ?>
+        </td>
+
+    
+
+    <td>
+        <?= $a['activo'] == 1 ? 'Activo' : 'Inactivo' ?>
+    </td>
+
+    <td class="text-center">
+        <a href="edit.php?id=<?= $a['id'] ?>" class="btn-action btn-edit">
+            <i class="fas fa-user-pen"></i>
+        </a>
+
+        <a href="#"
+           onclick="confirmarEliminar(<?= $a['id'] ?>)"
+           class="btn-action btn-delete">
+            <i class="fas fa-trash-alt"></i>
+        </a>
+    </td>
+
+</tr>
+<?php endforeach; ?>
+</tbody>
         </table>
     </div>
 

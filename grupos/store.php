@@ -26,8 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $exists = true; // El grupo ya existe
     } else {
         // 2. REGISTRO: Si no existe, procedemos a insertar
-        $sql = "INSERT INTO grupos (grado, grupo, periodo, id_carrera, id_tutor, activo) 
-                VALUES (:grado, :grupo, :periodo, :id_carrera, :id_tutor, 1)";
+
+        $sql = "INSERT INTO grupos (grado, grupo, periodo, id_carrera, id_tutor,f_registro, activo) 
+                VALUES (:grado, :grupo, :periodo, :id_carrera, :id_tutor, NOW (), 1)";
         
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':grado', $grado);

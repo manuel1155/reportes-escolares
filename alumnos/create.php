@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('alumnos');
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -171,10 +180,19 @@
         <div class="section-title">Identificación Académica</div>
         
         <div class="mb-4">
-            <label class="form-label">Matrícula Escolar</label>
+            <label class="form-label">Numero de control</label>
             <div class="input-group">
                 <span class="input-group-text bg-white border-0 text-muted"><i class="fas fa-id-card"></i></span>
-                <input type="text" name="matricula" class="form-control" placeholder="Ej. 2132405060000" style="border-left: none;" required>
+                <input type="text" name="id" class="form-control" placeholder="Ej. 2132405060000" style="border-left: none;" required>
+            </div>
+        </div>
+
+        
+        <div class="mb-4">
+            <label class="form-label">curp</label>
+            <div class="input-group">
+                <span class="input-group-text bg-white border-0 text-muted"><i class="fas fa-id-card"></i></span>
+                <input type="text" name="curp" class="form-control" placeholder="Ej. 2132405060000" style="border-left: none;" required>
             </div>
         </div>
 
@@ -187,12 +205,12 @@
 
         <div class="row mb-4">
             <div class="col-md-6">
-                <label class="form-label">Apellido Paterno</label>
-                <input type="text" name="apellido_paterno" class="form-control" placeholder="Paterno" required>
+                <label class="form-label">Primer_apellido</label>
+                <input type="text" name="primer_apellido" class="form-control" placeholder="Paterno" required>
             </div>
             <div class="col-md-6">
-                <label class="form-label">Apellido Materno</label>
-                <input type="text" name="apellido_materno" class="form-control" placeholder="Materno">
+                <label class="form-label">segundo_apellido</label>
+                <input type="text" name="segundo_apellido" class="form-control" placeholder="Materno">
             </div>
         </div>
 

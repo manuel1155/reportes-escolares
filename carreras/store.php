@@ -7,7 +7,7 @@ $error = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST['nombre'];
 
-    $sql = "INSERT INTO carreras (nombre, activo) VALUES (:nombre, 1)";
+    $sql = "INSERT INTO carreras (nombre, f_registro, activo) VALUES (:nombre, NOW(), 1)";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':nombre', $nombre);
 

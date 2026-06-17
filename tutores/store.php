@@ -10,8 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $segundo_apellido = $_POST['segundo_apellido'];
 
     // Insertamos incluyendo el campo activo por defecto en 1
-    $sql = "INSERT INTO tutores (nombre, primer_apellido, segundo_apellido, activo) 
-            VALUES (:nombre, :primer_apellido, :segundo_apellido, 1)";
+    $sql = "INSERT INTO tutores (nombre, primer_apellido, segundo_apellido,f_registro, activo) 
+            VALUES (:nombre, :primer_apellido, :segundo_apellido,NOW(), 1)";
     
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':nombre', $nombre);

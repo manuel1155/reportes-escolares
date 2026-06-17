@@ -6,11 +6,10 @@ $error = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        $stmt = $conn->prepare("UPDATE causas_reporte SET descripcion = ?, puntos_penalizacion = ? WHERE id = ?");
+        $stmt = $conn->prepare("UPDATE causas SET descripcion = ?, f_modificado = NOW() WHERE id = ?");
         
         if ($stmt->execute([
             $_POST['descripcion'],
-            $_POST['puntos_penalizacion'],
             $_POST['id']
         ])) {
             $success = true;
@@ -98,6 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <?php if ($error): ?>
             <script>
+                console.log(<?php $error?>)
                 Swal.fire({
                     title: 'Error de Sistema',
                     text: 'No se pudieron aplicar los cambios en la base de datos.',

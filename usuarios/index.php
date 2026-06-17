@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+require_once './../lib/permisos.php';
+
+validarPermiso('usuarios');
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -167,9 +176,7 @@
             <thead>
                 <tr>
                     <th width="8%">ID</th>
-                    <th width="30%">Nombre Completo</th>
-                    <th width="20%">Usuario</th>
-                    <th width="15%">Rol</th>
+                    <th width="20%">Email</th>
                     <th width="12%">Estado</th>
                     <th width="15%" class="text-center">Acciones</th>
                 </tr>
@@ -183,25 +190,29 @@
                 $result = $stmt->fetchAll();
 
                 foreach($result as $row) {
-                    // Lógica para el color del badge del rol
-                    $roleClass = 'role-' . strtolower($row['rol']);
-                    
-                    echo "<tr>
-                            <td class='fw-bold text-muted'>#".$row['id_usuario']."</td>
-                            <td class='fw-semibold'>".$row['nombre']."</td>
-                            <td><code class='text-primary'>".$row['username']."</code></td>
-                            <td>
-                                <span class='role-badge ".$roleClass."'>".$row['rol']."</span>
-                            </td>
-                            <td>
-                                <span class='text-success small fw-bold'><i class='fas fa-circle me-1' style='font-size: 8px;'></i> Activo</span>
-                            </td>
-                            <td>
+                   
+                
+                  echo "<tr>
+                        <td class='fw-bold text-muted'>#".$row['id']."</td>
+
+                        <td>   
+                              <code class='text-primary'>".$row['email']."</code>
+                        </td>
+                                
+                            
+                        <td>
+                         <span class='text-success small fw-bold'>
+                        <i class='fas fa-circle me-1' style='font-size:8px;'></i>
+                        Activo
+                        </span>
+                        </td>
+
+                        <td>
                                 <div class='action-btns'>
-                                    <a href='edit.php?id_usuario=".$row['id_usuario']."' class='btn-action btn-edit' title='Editar'>
+                                    <a href='edit.php?id=".$row['id']."' class='btn-action btn-edit' title='Editar'>
                                         <i class='fas fa-user-pen'></i>
                                     </a>
-                                    <button onclick='confirmDelete(".$row['id_usuario'].")' class='btn-action btn-delete' title='Eliminar'>
+                                    <button onclick='confirmDelete(".$row['id'].")' class='btn-action btn-delete' title='Eliminar'>
                                         <i class='fas fa-trash-can'></i>
                                     </button>
                                 </div>
