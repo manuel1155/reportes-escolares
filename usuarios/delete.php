@@ -2,14 +2,14 @@
 include './../lib/db.php';
 
 // Validamos que el ID exista
-$id_usuario = $_GET['id_usuario'] ?? null;
+$id = $_GET['id'] ?? null;
 $success = false;
 
-if ($id_usuario) {
+if ($id) {
     // Borrado lógico (activo = 0)
-    $sql = "UPDATE usuarios SET activo = 0 WHERE id = :id_usuario";
+    $sql = "UPDATE usuarios SET activo = 0 WHERE id = :id";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':id_usuario', $id_usuario);
+    $stmt->bindParam(':id', $id);
 
     if ($stmt->execute()) {
         $success = true;

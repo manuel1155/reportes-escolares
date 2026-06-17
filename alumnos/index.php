@@ -4,7 +4,7 @@ session_start();
 
 require_once './../lib/permisos.php';
 
-validarPermiso('carreras');
+validarPermiso('alumnos');
 
 
 include './../lib/db.php';

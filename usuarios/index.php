@@ -246,7 +246,7 @@ function confirmDelete(id) {
         reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = `delete.php?id_usuario=${id}`;
+            window.location.href = `delete.php?id=${id}`;
         }
     });
 }

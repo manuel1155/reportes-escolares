@@ -17,6 +17,7 @@ $inscripciones = isset($_POST['inscripciones']) ? 1 : 0;
 $personas      = isset($_POST['personas']) ? 1 : 0;
 $reportes      = isset($_POST['reportes']) ? 1 : 0;
 $tutores       = isset($_POST['tutores']) ? 1 : 0;
+$usuarios      = isset($_POST['usuarios']) ? 1 : 0;
 
 $sql = "INSERT INTO usuarios (
             email,
@@ -30,6 +31,7 @@ $sql = "INSERT INTO usuarios (
             personas,
             reportes,
             tutores,
+            usuarios,
             f_registro,
             activo
         ) VALUES (
@@ -44,15 +46,14 @@ $sql = "INSERT INTO usuarios (
             :personas,
             :reportes,
             :tutores,
-            NOW (),
+            :usuarios,
+            NOW(),
             1
         )";
 
 $stmt = $conn->prepare($sql);
-
 $stmt->bindParam(':email', $email);
 $stmt->bindParam(':password', $password);
-
 $stmt->bindParam(':alumnos', $alumnos);
 $stmt->bindParam(':carreras', $carreras);
 $stmt->bindParam(':causas', $causas);

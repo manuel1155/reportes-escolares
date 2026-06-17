@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // 2. REGISTRO: Si no existe, procedemos a insertar
 
         $sql = "INSERT INTO grupos (grado, grupo, periodo, id_carrera, id_tutor,f_registro, activo) 
-                VALUES (:grado, :grupo, :periodo, :id_carrera, :id_tutor, NOW (), 1)";
+                VALUES (:grado, :grupo, :periodo, :id_carrera, :id_tutor, NOW(), 1)";
         
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':grado', $grado);

@@ -197,7 +197,7 @@ validarPermiso('usuarios');
                     <td class="text-center">
                         <input type="checkbox" name="causa" value="1">
                     </td>
-                    <td>Causa</td>
+                    <td>Causas de Reportes</td>
                 </tr>
 
                 <tr>
