@@ -2,17 +2,68 @@
 
 include './../lib/db.php';
 
-$curp = trim($_GET['curp']);
+$tipo = $_POST['tipo_busqueda'];
+$busqueda = trim($_POST['busqueda']);
+
+if($tipo == 'control'){
+
+    $stmt = $conn->prepare("
+
+    SELECT a.*
+
+    FROM alumnos a
+
+    INNER JOIN inscripciones i
+    ON i.id_alumno = a.id
+
+    WHERE a.id = ?
+    AND a.activo = 1
+    AND i.activo = 1
+
+    LIMIT 1
+
+    ");
+
+    $stmt->execute([$busqueda]);
+
+    $alumno = $stmt->fetch();
+
+    if(!$alumno){
+
+        die("
+        <h2>No existe el alumno o no tiene inscripción activa.</h2>
+        <a href='index.php'>Regresar</a>
+        ");
+
+    }
+
+    header("Location:create.php?id=".$alumno['id']);
+    exit;
+}
 
 $stmt = $conn->prepare("
-SELECT *
-FROM alumnos
-WHERE curp=?
+
+SELECT DISTINCT a.*
+
+FROM alumnos a
+
+INNER JOIN inscripciones i
+ON i.id_alumno = a.id
+
+WHERE CONCAT(
+a.nombre,' ',
+a.primer_apellido,' ',
+a.segundo_apellido
+) LIKE ?
+
+AND a.activo = 1
+AND i.activo = 1
+
 ");
 
-$stmt->execute([$curp]);
+$stmt->execute(["%".$busqueda."%"]);
 
-$alumno = $stmt->fetch();
+$resultados = $stmt->fetchAll();
 
 ?>
 
@@ -22,77 +73,60 @@ $alumno = $stmt->fetch();
 
 <meta charset="UTF-8">
 
-<title>Alumno</title>
+<title>Coincidencias</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
-
-<body class="bg-light">
+<body>
 
 <div class="container mt-5">
 
-<?php if(!$alumno): ?>
+<h3>Coincidencias encontradas</h3>
 
-<div class="alert alert-danger">
+<table class="table table-bordered">
 
-Alumno no encontrado
+<tr>
 
-</div>
+<th>No. Control</th>
+<th>Nombre</th>
+<th></th>
+
+</tr>
+
+<?php foreach($resultados as $r): ?>
+
+<tr>
+
+<td><?= $r['id'] ?></td>
+
+<td>
+<?= $r['nombre'] ?>
+<?= $r['primer_apellido'] ?>
+<?= $r['segundo_apellido'] ?>
+</td>
+
+<td>
+
+<a
+href="create.php?id=<?= $r['id'] ?>"
+class="btn btn-success">
+
+Seleccionar
+
+</a>
+
+</td>
+
+</tr>
+
+<?php endforeach; ?>
+
+</table>
 
 <a href="index.php" class="btn btn-secondary">
-
 Regresar
-
 </a>
-
-<?php else: ?>
-
-<div class="card shadow p-4">
-
-<h3>Alumno Encontrado</h3>
-
-<hr>
-
-<p>
-
-<b>CURP:</b>
-
-<?= $alumno['curp'] ?>
-
-</p>
-
-<p>
-
-<b>Nombre:</b>
-
-<?= $alumno['nombre'] ?>
-
-<?= $alumno['apellido_paterno'] ?>
-
-<?= $alumno['apellido_materno'] ?>
-
-</p>
-
-<a
-href="create.php?id=<?= $alumno['id'] ?>"
-class="btn btn-danger">
-
-Crear Nuevo Reporte
-
-</a>
-
-<a
-href="index.php"
-class="btn btn-secondary">
-
-Regresar
-
-</a>
-
-</div>
-
-<?php endif; ?>
 
 </div>
 
