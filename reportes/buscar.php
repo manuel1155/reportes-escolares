@@ -101,9 +101,11 @@ $resultados = $stmt->fetchAll();
 <td><?= $r['id'] ?></td>
 
 <td>
-<?= $r['nombre'] ?>
-<?= $r['primer_apellido'] ?>
-<?= $r['segundo_apellido'] ?>
+<?= htmlspecialchars(
+            $r['nombre'] . ' ' .
+            $r['primer_apellido'] . ' ' .
+            $r['segundo_apellido']
+        ) ?>
 </td>
 
 <td>
